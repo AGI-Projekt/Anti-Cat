@@ -1,0 +1,12 @@
+{
+  "name": "cat-kitty-edition",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local-first browser ad filtering and conservative page cleanup.",
+  "scripts": {
+    "test:python": "python -m unittest discover -s tests -v",
+    "test:runtime": "node tests/test_runtime_contracts.js",
+    "check:syntax": "node --check src/background/service-worker.js && node --check src/detector/detector.js && node --check src/cleaner/cleaner.js",
+    "test": "npm run check:syntax && npm run test:runtime && npm run test:python"
+  }
+}
