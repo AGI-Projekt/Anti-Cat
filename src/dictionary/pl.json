@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "language": "pl",
+  "symbols": {
+    "0": {
+      "meaning": "wartość binarna zero",
+      "type": "binary"
+    },
+    "1": {
+      "meaning": "wartość binarna jeden",
+      "type": "binary"
+    },
+    "L": {
+      "meaning": "lewo",
+      "type": "direction"
+    },
+    "P": {
+      "meaning": "prawo",
+      "type": "direction"
+    },
+    "+": {
+      "meaning": "dodawanie lub dodanie elementu",
+      "type": "operator"
+    },
+    "−": {
+      "meaning": "odejmowanie lub usunięcie ze zbioru",
+      "type": "operator"
+    }
+  },
+  "policy": "Nieznane symbole oznaczaj jako nierozpoznane; nie wykonuj na ich podstawie akcji."
+}
