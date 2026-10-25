@@ -24,3 +24,13 @@ jobs:
         run: node tests/test_runtime_contracts.js
       - name: JavaScript syntax
         run: node --check src/background/service-worker.js && node --check src/detector/detector.js && node --check src/cleaner/cleaner.js
+      - name: Package release artifacts
+        if: runner.os == 'Linux'
+        run: python package_release.py
+      - name: Upload release ZIPs
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: CAT-Kitty-Edition-1.0.0
+          path: release-artifacts/*
+          if-no-files-found: error
