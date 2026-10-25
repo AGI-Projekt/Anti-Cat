@@ -1,0 +1,13 @@
+"use strict";
+const fs = require("fs");
+const vm = require("vm");
+const assert = require("assert");
+const detectorSource = fs.readFileSync("src/detector/detector.js", "utf8");
+const context = { Element: class Element { constructor(id, cls, attrs={}) { this.id=id; this.className=cls; this.attrs=attrs; } matches() { return false; } hasAttribute(k) { return Object.prototype.hasOwnProperty.call(this.attrs,k); } getAttribute(k) { return this.attrs[k] || null; } } };
+context.globalThis = context;
+vm.runInNewContext(detectorSource, context);
+const E = context.Element;
+assert.strictEqual(context.CatDetector.classify(new E("", "", {"data-ad-slot":"banner"})).verdict, "BLOCK");
+assert.strictEqual(context.CatDetector.classify(new E("", "sponsored-card")).verdict, "REVIEW");
+assert.strictEqual(context.CatDetector.classify(new E("main", "article")).verdict, "ALLOW");
+console.log("Runtime contracts: PASS (3 assertions)");
