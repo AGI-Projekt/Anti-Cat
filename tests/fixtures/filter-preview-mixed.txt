@@ -1,0 +1,9 @@
+! Cat filter preview regression fixture
+[Adblock Plus 2.0]
+ads.example.com
+0.0.0.0 tracker.example.net
+||cdn.example.org^$script,third-party
+@@||safe.example.org/allowed^$domain=portal.example.org
+example.org##.ad-slot
+||unsupported.example^$redirect=empty
+/foo-regex/

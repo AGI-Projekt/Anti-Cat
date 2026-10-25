@@ -1,0 +1,32 @@
+{
+  "schema_version": 5,
+  "defaults": {
+    "enabled": true,
+    "cleanerEnabled": true,
+    "cleanedCount": 0,
+    "exceptions": [],
+    "decisionLog": [],
+    "loggingEnabled": true,
+    "detailedDiagnostics": false,
+    "motionEnabled": true,
+    "rulesVersion": "2026.10.25.8",
+    "customBlockedDomains": [],
+    "remoteFilterCache": [],
+    "filterSources": [],
+    "filterHistory": [],
+    "filterAutoUpdate": false,
+    "filterUpdateIntervalHours": 24
+  },
+  "limits": {
+    "max_exception_domains": 100,
+    "max_log_events": 100,
+    "max_processed_dom_candidates_per_document": 1000,
+    "max_filter_sources": 5,
+    "max_source_bytes": 262144,
+    "max_source_domains": 1000,
+    "max_active_filter_domains": 1000,
+    "filter_source_timeout_ms": 15000,
+    "max_active_network_rules": 500,
+    "max_filter_preview_bytes": 262144
+  }
+}

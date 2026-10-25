@@ -1,31 +1,17 @@
 {
   "version": "1.0.0",
-  "language": "pl",
+  "locale": "pl-PL",
   "symbols": {
-    "0": {
-      "meaning": "wartość binarna zero",
-      "type": "binary"
-    },
-    "1": {
-      "meaning": "wartość binarna jeden",
-      "type": "binary"
-    },
-    "L": {
-      "meaning": "lewo",
-      "type": "direction"
-    },
-    "P": {
-      "meaning": "prawo",
-      "type": "direction"
-    },
-    "+": {
-      "meaning": "dodawanie lub dodanie elementu",
-      "type": "operator"
-    },
-    "−": {
-      "meaning": "odejmowanie lub usunięcie ze zbioru",
-      "type": "operator"
-    }
+    "L": "lewo",
+    "P": "prawo",
+    "0": "wartość binarna zero; znaczenie zależy od parametru",
+    "1": "wartość binarna jeden; znaczenie zależy od parametru",
+    "+": "dodawanie lub dodanie elementu",
+    "−": "odejmowanie lub usunięcie elementu ze zbioru",
+    "A-Z": "alfabet łaciński wielkimi literami",
+    "a-z": "alfabet łaciński małymi literami",
+    "graphics": "zasób wizualny wskazywany przez stabilny identyfikator"
   },
-  "policy": "Nieznane symbole oznaczaj jako nierozpoznane; nie wykonuj na ich podstawie akcji."
+  "unknown_symbol_policy": "reject_or_mark_unknown",
+  "rule": "Znaczenie symbolu musi wynikać z kontekstu; sam symbol 0 lub 1 nie określa stanu ochrony."
 }

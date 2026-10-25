@@ -1,18 +1,22 @@
 # Security Policy
 
-## Supported version
+## Zgłaszanie problemów
 
-The current development baseline is CAT Kitty Edition 1.0.0. The Firefox profile remains experimental until separately qualified.
+Nie publikuj publicznie danych, tokenów ani szczegółów umożliwiających wykorzystanie podatności. Do zgłoszenia dołącz wersję Cat, przeglądarkę, kroki reprodukcji i minimalny zrzut logu po usunięciu danych osobowych.
 
-## Reporting a vulnerability
+## Bezpieczne źródła filtrów (1.0.0)
 
-Please do not publish exploitable details in a public issue before maintainers have had an opportunity to assess them. Open a private security advisory in GitHub if enabled for this repository, or contact the repository maintainers through the organization’s official channel.
+- Tylko HTTPS, nazwa DNS (bez lokalnych hostów i dosłownych adresów IP).
+- Uprawnienie do originu jest żądane po świadomym dodaniu źródła przez użytkownika.
+- Brak cookies/poświadczeń w pobieraniu; limit 256 KiB i timeout 15 sekund.
+- Przekierowania do innego originu są odrzucane.
+- Opcjonalny przypięty SHA-256 albo plik `.sha256` na tym samym originie.
+- Struktura listy i reguły DNR są walidowane przed zmianą reguł. Błąd nie powinien zastąpić ostatniego poprawnego zestawu.
+- Reguły sieciowe pochodzące ze źródeł są ograniczone do udokumentowanego podzbioru ABP, maksymalnie 500 aktywnych wpisów. Nieobsługiwane opcje nie są wykonywane.
+- Automatyczne aktualizacje są wyłączone domyślnie.
 
-## Security principles
+Przypięty hash uwierzytelnia dokładną treść względem wartości podanej przez użytkownika. Plik sumy z tego samego originu zakłada zaufanie do tego wydawcy i jego kanału HTTPS. Hash obliczony bez niezależnego wzorca jest identyfikatorem zawartości, nie dowodem pochodzenia.
 
-- Keep permissions minimal and optional host access explicit.
-- Validate downloaded filter sources before activation.
-- Preserve the last known-good filter set on update failures.
-- Do not log full browsing URLs by default.
-- Never store license keys in the extension bundle.
-- Do not modify third-party antivirus files, processes, or drivers.
+## Zakres
+
+Cat nie zastępuje antywirusa, zapory sieciowej ani ochrony przed phishingiem. Adapter Bitdefender pozostaje nieaktywny, dopóki nie zostanie potwierdzone prawo do użycia oficjalnego SDK.

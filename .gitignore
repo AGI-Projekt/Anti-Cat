@@ -1,7 +1,11 @@
-__pycache__/
-*.py[cod]
 .venv/
-node_modules/
-dist/*.zip
-*.log
-.env
+__pycache__/
+*.pyc
+build/pyinstaller/
+dist/
+dist-installer/
+*.spec
+
+/node_modules/
+/dist/firefox/
+/dist/chromium/

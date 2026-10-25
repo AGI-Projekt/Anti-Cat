@@ -1,2 +1,65 @@
 <!doctype html>
-<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ustawienia Cat</title><style>body{font:16px system-ui;max-width:720px;margin:32px auto;padding:0 16px;color:#1b2638}fieldset{border:1px solid #cbd5e1;border-radius:12px;padding:16px;margin:16px 0}button{padding:9px 12px;border-radius:8px;border:0;background:#13243b;color:white;cursor:pointer}.hint{color:#58677b;font-size:13px}</style></head><body><h1>🐱 CAT — ustawienia</h1><fieldset><legend>Ochrona</legend><label><input type="checkbox" id="cleaner"> Włącz oczyszczanie DOM</label><p class="hint">Oczyszczanie jest ostrożne i odwracalne. Nie usuwa węzłów strony.</p></fieldset><fieldset><legend>Wyjątki domenowe</legend><label for="exceptions">Jedna domena w każdym wierszu</label><p><textarea id="exceptions" rows="5" style="width:100%" placeholder="example.com"></textarea></p><button id="save">Zapisz ustawienia</button><p id="status" role="status"></p></fieldset><p class="hint">CAT nie zapisuje pełnych adresów URL w dzienniku domyślnie. Integracja Bitdefender nie jest aktywna.</p><script src="options.js"></script></body></html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cat — Ustawienia</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0d14;--panel:#151925;--gold:#f0be58;--muted:#a9b2c3;--cyan:#5ddcff;--green:#72d6a2;--red:#ff8991}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f4f6fa;font:15px "Segoe UI",Arial,sans-serif}main{max-width:900px;margin:0 auto;padding:28px 18px}
+    header{display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid #293244}header img{width:66px;height:66px;object-fit:cover;border-radius:14px}h1{margin:0;color:var(--gold);letter-spacing:1.5px}h2{font-size:17px;margin:0 0 12px}p{color:var(--muted);line-height:1.55}section{background:var(--panel);border:1px solid #293244;border-radius:14px;padding:20px;margin-top:16px}
+    label{display:flex;gap:10px;align-items:flex-start;margin:14px 0;line-height:1.45}input[type=checkbox]{margin-top:4px;accent-color:var(--gold)}input[type=text],textarea,select{width:100%;background:#0d111b;color:#fff;border:1px solid #344056;border-radius:8px;padding:10px;font:inherit}textarea{min-height:100px;resize:vertical}.preview-result{padding:12px;border:1px solid #344056;border-radius:8px;background:#0d111b;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5;min-height:2em}.source-list{margin:10px 0 0;padding:0;list-style:none}.source-list li{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid #293244;overflow-wrap:anywhere}.source-meta{font-size:12px;color:var(--muted);line-height:1.5;margin-top:4px}.source-list button{margin:0;flex:0 0 auto;padding:7px 10px}.field-label{display:block;margin:14px 0 5px;font-weight:600}
+    button{border:0;border-radius:8px;padding:10px 15px;background:var(--gold);color:#18130a;font-weight:700;cursor:pointer;margin:8px 8px 0 0}button.secondary{background:#252e3f;color:#fff}button:disabled{opacity:.6;cursor:wait}.hint{font-size:12px;color:var(--muted)}#status{min-height:1.4em;color:var(--green)}.exception-list,.log-list{margin:10px 0 0;padding:0;list-style:none}.exception-list li,.log-list li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid #293244;overflow-wrap:anywhere}.exception-list button{margin:0;flex:0 0 auto;padding:7px 10px}.log-list li{display:block;font-size:13px;line-height:1.45}.log-meta{font-size:11px;color:var(--muted)}a{color:var(--cyan)}
+    @media(max-width:600px){main{padding:16px 12px}section{padding:15px}.exception-list li{align-items:flex-start}}
+  </style>
+</head>
+<body><main>
+  <header><img src="icons/cat-128.png" alt="Kitty"><div><h1>CAT — KITTY EDITION</h1><p style="margin:5px 0 0">Ustawienia i prywatność · 1.0.0</p></div></header>
+  <div id="status" role="status" aria-live="polite"></div>
+  <section><h2>Prywatność i diagnostyka</h2>
+    <label><input id="logging-enabled" type="checkbox"><span><strong>Lokalny dziennik decyzji</strong><br><span class="hint">Zapisuje czas, moduł, kategorię, akcję i identyfikator reguły. Limit: 100 ostatnich zdarzeń. Dane pozostają w magazynie przeglądarki.</span></span></label>
+    <label><input id="detailed-diagnostics" type="checkbox"><span><strong>Diagnostyka z nazwą domeny</strong><br><span class="hint">Dodatkowo zapisuje nazwę hosta strony dla nowych zdarzeń. Nie zapisuje ścieżki, parametrów ani pełnego URL.</span></span></label>
+    <label><input id="motion-enabled" type="checkbox"><span><strong>Efekty interfejsu</strong><br><span class="hint">Ustawienie na przyszłe animacje Kitty. Preferencja systemowa ograniczenia ruchu nadal ma pierwszeństwo.</span></span></label>
+    <button id="save-settings">Zapisz ustawienia</button><button id="clear-log" class="secondary">Wyczyść dziennik</button>
+    <button id="export-settings" class="secondary">Eksportuj ustawienia</button><button id="import-settings" class="secondary">Importuj ustawienia</button><input id="import-file" type="file" accept="application/json,.json" hidden>
+    <p class="hint">Eksport obejmuje ustawienia i wyjątki, ale nie dziennik zdarzeń ani historię przeglądania.</p>
+  </section>
+  <section><h2>Wyjątki dla stron</h2><p>Wpisz domenę, np. <code>example.com</code>. Wyjątek jest odwracalny i pozwala na zasoby sieciowe inicjowane przez tę domenę, a także wyłącza Ad. Clean na jej stronach.</p>
+    <label for="new-domain" style="display:block"><strong>Domena</strong></label><input id="new-domain" type="text" autocomplete="off" spellcheck="false" placeholder="example.com">
+    <button id="add-domain">Dodaj wyjątek</button><ul id="exception-list" class="exception-list"></ul>
+    <p class="hint">Maksymalnie 100 domen. Nie dodawaj domeny do wyjątków, jeżeli nie chcesz wyłączyć ochrony na tej stronie.</p>
+  </section>
+
+  <section id="filter-lab"><h2>Laboratorium filtrów · podgląd przed aktywacją</h2>
+    <p>Wklej tekst listy domen, hosts lub obsługiwanych reguł sieciowych. Cat przeanalizuje go lokalnie i pokaże, co rozpozna, a co pominie. Podgląd nie zapisuje danych, nie pobiera plików i nie zmienia aktywnej ochrony.</p>
+    <label for="filter-preview-text" style="display:block"><strong>Tekst do analizy (maks. 256 KiB)</strong></label>
+    <textarea id="filter-preview-text" spellcheck="false" placeholder="||ads.example.net^$script,third-party&#10;@@||safe.example.net/allowed^$domain=portal.example.com&#10;example.org##.ad-slot"></textarea>
+    <button id="preview-filter-list">Przeanalizuj listę</button><button id="clear-filter-preview" class="secondary">Wyczyść podgląd</button>
+    <div id="filter-preview-result" class="preview-result" role="status" aria-live="polite">Nie wykonano analizy.</div>
+    <p class="hint">Podzbiór obsługiwanych reguł jest ograniczony. Filtry kosmetyczne, regex, przekierowania, removeparam, CSP i nieznane opcje są pomijane. W razie wątpliwości nie aktywuj listy.</p>
+  </section>
+
+  <section><h2>Własna lista domen do blokowania</h2>
+    <p>Wklej jedną domenę w wierszu, np. <code>ads.example.com</code>. Cat zablokuje żądania sieciowe do tych domen. Możesz zaimportować plik tekstowy z domenami lub format hosts (np. 0.0.0.0 ads.example.com). Import jest lokalny; Cat nie pobiera zewnętrznych list bez jawnie skonfigurowanego i zweryfikowanego źródła. Domena główna może zablokować legalne treści.</p>
+    <label for="custom-domains" style="display:block"><strong>Domeny (maks. 200)</strong></label>
+    <textarea id="custom-domains" spellcheck="false" placeholder="ads.example.com&#10;tracker.example.net"></textarea>
+    <button id="save-custom-filters">Zastosuj listę</button><button id="import-filter-list" class="secondary">Importuj .txt</button><button id="export-filter-list" class="secondary">Eksportuj listę</button><button id="rollback-filter-list" class="secondary">Przywróć poprzednią</button><button id="clear-custom-filters" class="secondary">Wyczyść listę</button><input id="filter-list-file" type="file" accept=".txt,text/plain" hidden>
+    <p class="hint">Reguły są lokalne, walidowane przed zastosowaniem i zastępowane atomowo. Cat przechowuje do 5 poprzednich wersji listy, aby umożliwić wycofanie zmian. Wyjątki witryn mają wyższy priorytet. Nie wpisuj adresów URL ani ścieżek.</p>
+    <p class="hint">Aktywne domeny na liście: <strong id="custom-filter-count">0</strong></p>
+  </section>
+  <section id="remote-sources-section"><h2>Zewnętrzne źródła filtrów · 1.0.0</h2>
+    <p>Dodawaj wyłącznie zaufane listy tekstowe przez HTTPS: domeny po jednej na wiersz albo wpisy hosts (np. <code>0.0.0.0 ads.example.net</code>). Każde źródło może mieć przypięty SHA-256 lub plik kontrolny SHA-256 pod tym samym originem. Bez wzorca Cat oblicza i zapisuje skrót oraz waliduje format, ale nie potwierdza niezależnie tożsamości wydawcy. Limit: 5 źródeł, 256 KiB na źródło, 1000 aktywnych domen łącznie.</p>
+    <label class="field-label" for="filter-source-url">Adres listy HTTPS</label><input id="filter-source-url" type="text" autocomplete="off" spellcheck="false" placeholder="https://lists.example.org/domains.txt">
+    <label class="field-label" for="filter-source-sha256">Oczekiwany SHA-256 (opcjonalnie, 64 znaki)</label><input id="filter-source-sha256" type="text" autocomplete="off" spellcheck="false" placeholder="abcdef012345…">
+    <label class="field-label" for="filter-source-checksum-url">Lub adres pliku .sha256 (opcjonalnie, ten sam origin)</label><input id="filter-source-checksum-url" type="text" autocomplete="off" spellcheck="false" placeholder="https://lists.example.org/domains.txt.sha256">
+    <p class="hint">Nie podawaj URL-i zawierających tokeny lub inne sekrety. Przekierowania do innej domeny są odrzucane. Dodanie źródła wymaga osobnej zgody na dostęp do hosta. Nowe źródło nie blokuje niczego, dopóki nie zostanie pobrane i zwalidowane.</p>
+    <button id="add-filter-source">Dodaj źródło</button>
+    <h3 style="margin:20px 0 8px;font-size:15px">Harmonogram aktualizacji</h3>
+    <label><input id="filter-auto-update" type="checkbox"><span><strong>Włącz automatyczne aktualizacje</strong><br><span class="hint">Domyślnie wyłączone. Błędy nie zastępują ostatniego poprawnego zestawu.</span></span></label>
+    <label class="field-label" for="filter-update-interval">Częstotliwość</label><select id="filter-update-interval"><option value="6">Co 6 godzin</option><option value="12">Co 12 godzin</option><option value="24">Co 24 godziny</option></select>
+    <button id="save-filter-schedule" class="secondary">Zapisz harmonogram</button><button id="update-filter-sources">Odśwież wszystkie źródła teraz</button>
+    <p id="filter-update-summary" class="hint">Brak aktywnych źródeł zewnętrznych.</p>
+    <ul id="filter-source-list" class="source-list"></ul>
+  </section>
+  <section><h2>Ostatnie decyzje</h2><p>To lokalny dziennik działań Cat, a nie kompletny raport wszystkich żądań sieciowych przechwyconych przez przeglądarkę.</p><ul id="log-list" class="log-list"></ul></section>
+  <section><h2>Informacje</h2><p>Cat działa na podstawie lokalnych reguł. Nie posiada w tej wersji serwera telemetrycznego ani integracji z silnikiem Bitdefender. Integracja z Bitdefenderem pozostaje nieaktywna bez licencjonowanego SDK. Aktualizacje list źródeł używają wyłącznie URL-i HTTPS dodanych przez użytkownika.</p><p class="hint">Wersja reguł: <span id="rules-version">—</span></p></section>
+</main><script src="options.js"></script></body></html>

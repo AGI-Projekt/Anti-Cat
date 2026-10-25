@@ -1,0 +1,95 @@
+{
+  "version": "1.0.0",
+  "decision_actions": [
+    "ALLOW",
+    "BLOCK",
+    "REVIEW"
+  ],
+  "modules": [
+    "detector",
+    "blocker",
+    "cleaner",
+    "kitty-ui",
+    "storage",
+    "bitdefender-adapter"
+  ],
+  "privacy": {
+    "full_url_logging_default": false,
+    "telemetry_default": false,
+    "local_decision_log_limit": 100
+  },
+  "bitdefender": {
+    "default_enabled": false,
+    "requires_vendor_documentation": true,
+    "requires_valid_license": true
+  },
+  "features": [
+    "abp_compatible_network_rule_subset",
+    "all_or_nothing_source_refresh",
+    "bounded_diagnostics",
+    "browser_regression_fixture",
+    "conservative_dom_cleaning",
+    "cross_platform_ci_matrix",
+    "https_filter_sources",
+    "local_filter_preview",
+    "manifest_permission_audit",
+    "preview_skip_reason_diagnostics",
+    "read_only_filter_analysis",
+    "release_package_integrity_checks",
+    "release_readiness_gate",
+    "remote_filter_cache_rollback",
+    "rule_performance_limits",
+    "rule_validation",
+    "scheduled_filter_updates",
+    "settings_export_import",
+    "sha256_validation",
+    "stable_release_metadata",
+    "unsupported_filter_rule_accounting"
+  ],
+  "filter_sources": {
+    "max_sources": 5,
+    "https_only": true,
+    "max_bytes_per_source": 262144,
+    "max_domains_per_source": 1000,
+    "max_active_domains": 1000,
+    "redirect_policy": "same-origin only; cross-origin redirect denied",
+    "auto_update_default": false,
+    "interval_hours": [
+      6,
+      12,
+      24
+    ],
+    "integrity": "optional pinned SHA-256 or same-origin SHA-256 sidecar; computed digest is retained in metadata",
+    "max_active_network_rules": 500,
+    "supported_network_filter_options": [
+      "script",
+      "image",
+      "stylesheet",
+      "font",
+      "subdocument",
+      "xmlhttprequest",
+      "ping",
+      "media",
+      "other",
+      "third-party",
+      "first-party",
+      "domain=",
+      "match-case"
+    ],
+    "unsupported_features": [
+      "regex filters",
+      "cosmetic filters",
+      "redirect",
+      "removeparam",
+      "CSP",
+      "unknown options"
+    ]
+  },
+  "release": {
+    "channel": "stable",
+    "version": "1.0.0",
+    "telemetry": false,
+    "browser_e2e_status": "manual verification required before claiming browser-tested status",
+    "bitdefender_integration": "not_implemented_pending_vendor_sdk_and_license"
+  }
+}

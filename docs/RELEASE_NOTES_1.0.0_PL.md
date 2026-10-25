@@ -1,17 +1,22 @@
-# CAT — KITTY EDITION 1.0.0
+# CAT — KITTY EDITION 1.0.0 Stable
 
-## Zakres
+## Zakres wydania
 
-- Manifest V3 dla Chromium oraz eksperymentalny manifest Firefox.
-- Ostrożny detector z decyzjami `ALLOW`, `BLOCK`, `REVIEW`.
-- Reguły sieciowe DNR i lokalne wyjątki.
-- Cleaner z odwracalnym ukrywaniem elementów.
-- Lokalny popup i ustawienia.
-- Kontrole projektu i checklistę regresji przeglądarkowej.
+CAT 1.0.0 utrwala rozszerzenie oparte o Manifest V3, lokalne ustawienia i dziennik, ostrożne wykrywanie DOM, odwracalne oczyszczanie oraz reguły deklaratywnego blokowania. Rozszerzenie działa niezależnie od systemu Windows/Linux poprzez wspierane przeglądarki WebExtensions.
 
-## Ograniczenia
+## Najważniejsze gwarancje projektu
 
-- Parser obsługuje ograniczony podzbiór składni sieciowej Adblock Plus, nie pełną EasyList.
-- Integracja Bitdefender nie jest wdrożona.
-- Firefox pozostaje eksperymentalny.
-- Testy E2E w rzeczywistych przeglądarkach wymagają ręcznego wykonania i zapisania wyników.
+- Brak telemetrii i domyślnego zapisywania pełnych URL.
+- Minimalne stałe uprawnienia; dostęp do źródeł zewnętrznych jest opcjonalny i wymaga zgody.
+- Zewnętrzne listy podlegają limitom, walidacji oraz opcjonalnemu SHA-256.
+- Błąd aktualizacji nie powinien podmieniać ostatniego poprawnego zestawu; historia rollback jest ograniczona.
+- Podgląd filtrów jest lokalny i bez efektów ubocznych.
+- Cleaner nie usuwa węzłów strony; niejednoznaczne sygnały reklamowe otrzymują REVIEW.
+- Parser obsługuje tylko udokumentowany podzbiór reguł sieciowych; filtry kosmetyczne i nieznane opcje są pomijane.
+- Integracja Bitdefender nie jest zaimplementowana.
+
+## Testowanie i ograniczenia
+
+Automatyczny wynik 1.0.0 (40 testów Python, runtime JavaScript PASS i 118 kontroli Release Gate bez błędów) został zapisany w `docs/TEST_REPORT_1.0.0_PL.md`.
+
+Automatyczny przebieg release gate nie jest równoznaczny z testem E2E na prawdziwej przeglądarce. Wydanie zawiera checklistę `docs/BROWSER_REGRESSION_1.0.0_PL.md`; wyniki ręczne muszą zostać zapisane dla konkretnych wersji przeglądarek i systemów. Profil Firefox jest eksperymentalny, dopóki nie zostanie osobno zakwalifikowany.

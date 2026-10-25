@@ -1,5 +1,5 @@
 # Bitdefender Adapter — status
 
-Integracja nie jest aktywna w standardowym wydaniu. Przed implementacją należy potwierdzić u producenta oficjalne SDK/API, licencję, wsparcie dla Windows/Linux, dozwolony sposób wywołań z rozszerzenia oraz zasady przesyłania danych.
+**Status: niezaimplementowany.** W Cat 0.8.0 nie ma kodu komunikującego się z Bitdefenderem.
 
-Nie modyfikuj plików, procesów, usług ani sterowników Bitdefendera. Nie umieszczaj kluczy licencyjnych w rozszerzeniu. Gdy SDK nie jest dostępne, podstawowe funkcje CAT muszą działać samodzielnie.
+Przed stworzeniem adaptera wymagane są: oficjalna dokumentacja odpowiedniego SDK, potwierdzenie praw licencyjnych dla sposobu dystrybucji, wsparcie dla docelowego systemu, opis danych wejściowych/wyjściowych i testy timeoutów. Przyszła warstwa powinna zwracać znormalizowany wynik (`ALLOW`, `BLOCK`, `REVIEW`) i nie może modyfikować plików, procesów, sterowników ani ustawień ochrony Bitdefendera.

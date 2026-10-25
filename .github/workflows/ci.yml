@@ -1,10 +1,14 @@
 name: CAT CI
+
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
 jobs:
-  test:
+  verify:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -16,21 +20,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Build extension profiles
+      - name: Build both browser profiles
         run: python build_extension.py all
       - name: Python tests
         run: python -m unittest discover -s tests -v
-      - name: Runtime contracts
+      - name: JavaScript syntax checks
+        shell: bash
+        run: |
+          node --check src/background/service-worker.js
+          node --check src/detector/detector.js
+          node --check src/cleaner/cleaner.js
+          node --check src/kitty-ui/options.js
+          node --check src/kitty-ui/popup.js
+      - name: Runtime contract tests
         run: node tests/test_runtime_contracts.js
-      - name: JavaScript syntax
-        run: node --check src/background/service-worker.js && node --check src/detector/detector.js && node --check src/cleaner/cleaner.js
-      - name: Package release artifacts
-        if: runner.os == 'Linux'
-        run: python package_release.py
-      - name: Upload release ZIPs
-        if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v4
-        with:
-          name: CAT-Kitty-Edition-1.0.0
-          path: release-artifacts/*
-          if-no-files-found: error
+      - name: Release Gate
+        run: python release_gate.py

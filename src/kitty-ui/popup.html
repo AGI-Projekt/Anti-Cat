@@ -1,2 +1,50 @@
 <!doctype html>
-<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cat — Kitty</title><style>body{font:14px system-ui;min-width:270px;margin:0;padding:16px;background:#101827;color:#f5f7fb}h1{font-size:18px;margin:0 0 12px}button{border:0;border-radius:9px;padding:10px 12px;background:#e6c36a;color:#101827;font-weight:700;cursor:pointer;width:100%}.muted{color:#aab6c8;font-size:12px;margin-top:10px}</style></head><body><h1>🐱 Cat — Kitty Edition</h1><p id="state">Sprawdzanie stanu ochrony…</p><button id="toggle">Przełącz ochronę</button><p class="muted">Kitty informuje o stanie rozszerzenia. Nie jest świadomą istotą.</p><script src="popup.js"></script></body></html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cat — Kitty Edition</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0d14;--panel:#151925;--gold:#f0be58;--muted:#a9b2c3;--cyan:#5ddcff;--green:#72d6a2;--red:#ff8991}
+    *{box-sizing:border-box}body{margin:0;width:350px;background:var(--bg);color:#f4f6fa;font:14px "Segoe UI",Arial,sans-serif}
+    header{display:flex;gap:12px;align-items:center;padding:16px;border-bottom:1px solid #283142}header img{width:54px;height:54px;object-fit:cover;border-radius:12px}
+    h1{font-size:20px;letter-spacing:1.5px;color:var(--gold);margin:0}small{color:var(--muted)}main{padding:14px}.card{background:var(--panel);border:1px solid #293244;border-radius:12px;padding:13px;margin-bottom:11px}
+    .status{font-weight:700;margin-bottom:6px}.good{color:var(--green)}.warn{color:var(--gold)}.bad{color:var(--red)}.muted{color:var(--muted);font-size:12px;line-height:1.45}
+    button{width:100%;border:0;border-radius:9px;padding:10px 12px;background:var(--gold);color:#18130a;font-weight:700;cursor:pointer;margin-top:8px}button.secondary{background:#252e3f;color:#f4f6fa}button:disabled{opacity:.55;cursor:wait}
+    .row{display:flex;justify-content:space-between;gap:8px;align-items:center}.row strong{font-size:13px}.number{font-size:23px;color:var(--cyan);font-weight:700}
+    .exception-note{margin-top:7px;color:var(--muted);font-size:12px;line-height:1.4}.events{margin:8px 0 0;padding:0;list-style:none}.events li{padding:6px 0;border-top:1px solid #283142;font-size:12px;line-height:1.35}.event-time{color:var(--muted);font-size:10px}
+    footer{padding:0 16px 15px;color:var(--muted);font-size:11px;line-height:1.5}a{color:var(--cyan);text-decoration:none}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+<header><img src="icons/cat-128.png" alt="Kitty — maskotka Cat"><div><h1>CAT</h1><small>KITTY EDITION · 1.0.0</small></div></header>
+<main>
+  <section class="card">
+    <div id="network-status" class="status warn">Sprawdzanie ochrony sieciowej…</div>
+    <div class="muted">Blokowanie dotyczy wyłącznie zasobów pasujących do lokalnego zestawu reguł.</div>
+    <button id="toggle-protection">Sprawdzanie…</button>
+  </section>
+  <section class="card">
+    <div class="row"><strong>Ad. Clean</strong><span id="cleaner-status" class="status warn">Sprawdzanie…</span></div>
+    <div class="muted">Potwierdzone elementy ukryte w DOM przez Cat.</div>
+    <div id="count" class="number">0</div>
+    <button id="toggle-cleaner" class="secondary">Sprawdzanie…</button>
+    <button id="reset" class="secondary">Wyzeruj licznik</button>
+  </section>
+  <section class="card">
+    <div id="site-title"><strong>Wyjątek dla bieżącej strony</strong></div>
+    <div id="site-host" class="muted">Nie można odczytać adresu bieżącej strony.</div>
+    <button id="toggle-exception" class="secondary" disabled>Wyjątek niedostępny</button>
+    <div class="exception-note">Wyjątek pozwala na zasoby sieciowe inicjowane przez tę domenę i wyłącza automatyczne oczyszczanie na stronie. Zmiana jest odwracalna.</div>
+  </section>
+  <section class="card">
+    <div class="row"><strong>Ostatnie decyzje</strong><span id="log-status" class="muted">dziennik lokalny</span></div>
+    <ul id="events" class="events"><li class="muted">Brak zapisanych zdarzeń.</li></ul>
+    <button id="open-options" class="secondary">Ustawienia, prywatność i wyjątki</button>
+  </section>
+</main>
+<footer>Reguły: <span id="rules-version">—</span>. Cat nie zastępuje antywirusa. Pełna historia przeglądania nie jest zapisywana.</footer>
+<script src="popup.js"></script>
+</body>
+</html>
